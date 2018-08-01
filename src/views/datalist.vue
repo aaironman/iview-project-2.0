@@ -57,9 +57,8 @@
                 <Content :style="{padding: '0 16px 16px'}">
                     <Table :columns="columns1" :data="data1"></Table>
                     <Page :total="totalNum" :current="pageNum" show-total @on-change="getData"/>
-                    <Modal
-                            v-model="showModel"
-                            footer-hide
+                    <Modal v-model="showModel"
+                           footer-hide
                     >
                         <img v-bind:src="imgUrl" width="100%" height="100%">
                     </Modal>
@@ -69,12 +68,14 @@
     </div>
 </template>
 <script>
+    import Util from '../libs/util'
+
     export default {
         data() {
             return {
                 isCollapsed: false,
                 showModel: false,
-                imgUrl:'',
+                imgUrl: '',
                 totalNum: 0,
                 pageNum: 1,
                 columns1: [
@@ -108,7 +109,7 @@
                                 on: {
                                     click: function () {
                                         that.showModel = true
-                                        that.imgUrl = 'http://11.0.0.103:5000/static/' + that.data1[params.index].avatarUrl
+                                        that.imgUrl =Util.baseUrl + '/static/' + that.data1[params.index].avatarUrl
                                         console.log('value:' + that.data1[params.index].avatarUrl)
                                     }
                                 }
@@ -130,7 +131,7 @@
         methods: {
             getData: function (pagenum) {
                 console.log('pagenum:' + pagenum);
-                var url = 'http://11.0.0.103:5000/api/girl';
+                var url = Util.baseUrl + '/api/girl';
                 this.pageNum = pagenum;
                 var params = {
                     page: this.pageNum,
@@ -148,7 +149,7 @@
             }
         },
         created() {
-            var url = 'http://11.0.0.103:5000/api/girl';
+            var url = Util.baseUrl + '/api/girl';
             var params = {
                 page: 1,
                 rows: 10
