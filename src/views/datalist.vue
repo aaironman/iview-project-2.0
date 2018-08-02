@@ -53,9 +53,17 @@
                 </Menu>
             </Sider>
             <Layout>
-                <Header :style="{background: '#fff', boxShadow: '0 2px 3px 2px rgba(0,0,0,.1)'}"></Header>
+                <Header :style="{background: '#000', boxShadow: '0 2px 3px 2px rgba(0,0,0,.1)'}"></Header>
                 <Content :style="{padding: '0 16px 16px'}">
-                    <Table :columns="columns1" :data="data1"></Table>
+                    <!--<Table :columns="columns1" :data="data1"></Table>-->
+                    <filter-table
+                            :columns="columns1"
+                            :data="data1"
+                            :search="search"
+                            @load="loadData"
+                    >
+
+                    </filter-table>
                     <Page :total="totalNum" :current="pageNum" show-total @on-change="getData"/>
                     <Modal v-model="showModel"
                            footer-hide
@@ -69,15 +77,69 @@
 </template>
 <script>
     import Util from '../libs/util'
+    import FilterTable from '../components/FilterTable'
+
+
+    const city = [{
+        value: '北京市',
+            name: '北京市'
+    },
+    {
+        value: '上海市',
+            name: '上海市'
+    },
+    {
+        value: '武汉市',
+            name: '武汉市'
+    },
+    {
+        value: '杭州市',
+            name: '杭州市'
+    },
+    {
+        value: '广州市',
+            name: '广州市'
+    },
+    {
+        value: '天津市',
+            name: '天津市'
+    },
+    {
+        value: '南京市',
+            name: '南京市'
+    },
+    {
+        value: '深圳市',
+            name: '深圳市'
+    },
+    {
+        value: '扬州市',
+            name: '扬州市'
+    },
+    {
+        value: '成都市',
+            name: '成都市'
+    },
+    {
+        value: '长沙市',
+            name: '长沙市'
+    },
+    {
+        value: '',
+            name: '全部'
+    }]
 
     export default {
+        components: {FilterTable},
+
         data() {
             return {
                 isCollapsed: false,
                 showModel: false,
                 imgUrl: '',
                 totalNum: 0,
-                pageNum: 1,
+                pageNum:1,
+                search:{},
                 columns1: [
                     {
                         title: 'id',
@@ -85,11 +147,18 @@
                     },
                     {
                         title: '姓名',
-                        key: 'realName'
+                        key: 'realName',
+                        filter:{
+                            type: 'Input'
+                        }
                     },
                     {
                         title: '城市',
-                        key: 'city'
+                        key: 'city',
+                        filter:{
+                            type: 'Select',
+                            option:city
+                        }
                     },
                     {
                         title: '头像',
@@ -132,13 +201,30 @@
             getData: function (pagenum) {
                 console.log('pagenum:' + pagenum);
                 var url = Util.baseUrl + '/api/girl';
-                this.pageNum = pagenum;
-                var params = {
-                    page: this.pageNum,
-                    rows: 10
-                }
+                this.pageNum = pagenum
+                // var params = {
+                //     page: this.pageNum,
+                //     rows: 10
+                // }
+                this.search.page = this.pageNum
+                this.search.rows = 10
                 var that = this;
-                this.$ajax.get(url, {params: params}).then(function (res) {
+                this.$ajax.get(url, {params: this.search}).then(function (res) {
+                    console.log(res.data);
+                    that.data1 = res.data.data.girls;
+                    that.totalNum = res.data.data.total_page;
+                    console.log(that.data1)
+                }).catch(function (res) {
+                    console.log(res)
+                })
+            },
+            loadData() {
+                var url = Util.baseUrl + '/api/girl';
+                this.pageNum = 1
+                this.search.page = this.pageNum
+                console.log('loadData:'+ JSON.stringify(this.search))
+                var that = this;
+                this.$ajax.get(url, {params: this.search}).then(function (res) {
                     console.log(res.data);
                     that.data1 = res.data.data.girls;
                     that.totalNum = res.data.data.total_page;
