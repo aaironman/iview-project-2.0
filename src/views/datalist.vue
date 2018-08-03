@@ -129,6 +129,8 @@
             name: '全部'
     }]
 
+
+
     export default {
         components: {FilterTable},
 
@@ -199,6 +201,7 @@
         },
         methods: {
             getData: function (pagenum) {
+                this.$Spin.show()
                 console.log('pagenum:' + pagenum);
                 var url = Util.baseUrl + '/api/girl';
                 this.pageNum = pagenum
@@ -210,31 +213,37 @@
                 this.search.rows = 10
                 var that = this;
                 this.$ajax.get(url, {params: this.search}).then(function (res) {
+                    that.$Spin.hide()
                     console.log(res.data);
                     that.data1 = res.data.data.girls;
                     that.totalNum = res.data.data.total_page;
                     console.log(that.data1)
                 }).catch(function (res) {
+                    that.$Spin.hide()
                     console.log(res)
                 })
             },
             loadData() {
+                this.$Spin.show()
                 var url = Util.baseUrl + '/api/girl';
                 this.pageNum = 1
                 this.search.page = this.pageNum
                 console.log('loadData:'+ JSON.stringify(this.search))
                 var that = this;
                 this.$ajax.get(url, {params: this.search}).then(function (res) {
+                    that.$Spin.hide()
                     console.log(res.data);
                     that.data1 = res.data.data.girls;
                     that.totalNum = res.data.data.total_page;
                     console.log(that.data1)
                 }).catch(function (res) {
+                    that.$Spin.hide()
                     console.log(res)
                 })
             }
         },
         created() {
+            this.$Spin.show()
             var url = Util.baseUrl + '/api/girl';
             var params = {
                 page: 1,
@@ -242,13 +251,15 @@
             }
             var that = this;
             this.$ajax.get(url, {params: params}).then(function (res) {
+                that.$Spin.hide()
                 console.log(res.data);
                 that.data1 = res.data.data.girls;
                 that.totalNum = res.data.data.total_page;
                 console.log(that.data1)
             }).catch(function (res) {
+                that.$Spin.hide()
                 console.log(res)
-            })
+            });
         }
     }
 </script>
