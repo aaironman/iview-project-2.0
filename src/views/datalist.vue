@@ -209,8 +209,10 @@
                 //     page: this.pageNum,
                 //     rows: 10
                 // }
-                this.search.page = this.pageNum
-                this.search.rows = 10
+                // this.search.page = this.pageNum
+                // this.search.rows = 10
+                this.$set(this.search,'page',this.pageNum)
+                this.$set(this.search,'rows',10)
                 var that = this;
                 this.$ajax.get(url, {params: this.search}).then(function (res) {
                     that.$Spin.hide()
@@ -227,7 +229,8 @@
                 this.$Spin.show()
                 var url = Util.baseUrl + '/api/girl';
                 this.pageNum = 1
-                this.search.page = this.pageNum
+                // this.search.page = this.pageNum
+                this.$set(this.search,'page',this.pageNum)
                 console.log('loadData:'+ JSON.stringify(this.search))
                 var that = this;
                 this.$ajax.get(url, {params: this.search}).then(function (res) {

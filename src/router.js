@@ -12,6 +12,13 @@ const routers = [
             title:'datalist'
         },
         component:(resolve) => require(['./views/datalist.vue'], resolve)
+    },
+    {
+        path:'/tablelist',
+        meta:{
+            title:'tablelist'
+        },
+        component:(resolve) => require(['./views/tablelist.vue'], resolve)
     }
 
 ];

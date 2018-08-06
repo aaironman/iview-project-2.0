@@ -9,9 +9,12 @@ import axios from 'axios'
 
 
 
+
 Vue.use(VueRouter);
 Vue.use(iView);
 Vue.prototype.$ajax = axios;
+
+
 
 // 路由配置
 const RouterConfig = {

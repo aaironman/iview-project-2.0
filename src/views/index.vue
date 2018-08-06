@@ -66,7 +66,12 @@
                 <!-- <router-link> 默认会被渲染成一个 `<a>` 标签 -->
                 <router-link to="/list">Go to List</router-link>
             </p>
-
+            <p>
+                <!-- 使用 router-link 组件来导航. -->
+                <!-- 通过传入 `to` 属性指定链接. -->
+                <!-- <router-link> 默认会被渲染成一个 `<a>` 标签 -->
+                <router-link to="/tablelist">Go to TableList</router-link>
+            </p>
             </Col>
         </Row>
     </div>
