@@ -7,6 +7,7 @@
                 :show-vertical-border="false"
                 @on-custom-comp="customCompFunc"
                 :is-loading="isLoading"
+                :row-click="rowClick"
         ></v-table>
         <v-pagination :total="totalNum" :pageIndex="pageNum"></v-pagination>
     </div>
@@ -59,13 +60,6 @@
                         columnAlign: 'center'
                     },
                     {
-                        title: '头像',
-                        field: 'avatarUrl',
-                        width: 330,
-                        titleAlign: 'center',
-                        columnAlign: 'center'
-                    },
-                    {
                         title: '操作',
                         field: 'avatarUrl',
                         componentName: 'table-operation'
@@ -76,25 +70,32 @@
             customCompFunc(params){
                 console.log('url:' + params.avatarUrl)
 
+            },
+            request(){
+                this.isLoading = true;
+                var url = Util.baseUrl + '/api/girl';
+                var params = {
+                    page: 1,
+                    rows: 10
+                }
+                var that = this;
+                this.$ajax.get(url, {params: params}).then(function (res) {
+                    that.isLoading = false
+                    console.log(res.data);
+                    that.data1 = res.data.data.girls;
+                    that.totalNum = res.data.data.total_page;
+                    console.log(that.data1)
+                }).catch(function (res) {
+                    that.isLoading = false
+                    console.log(res)
+                });
+            },
+            rowClick(rowIndex, rowData, column){
+                console.log('rowIndex:' + rowIndex+"--rowData:" + JSON.stringify(rowData) + "--column:" + JSON.stringify(column));
             }
         },
         created() {
-            var url = Util.baseUrl + '/api/girl';
-            var params = {
-                page: 1,
-                rows: 10
-            }
-            var that = this;
-            this.$ajax.get(url, {params: params}).then(function (res) {
-                that.isLoading = false
-                console.log(res.data);
-                that.data1 = res.data.data.girls;
-                that.totalNum = res.data.data.total_page;
-                console.log(that.data1)
-            }).catch(function (res) {
-                that.isLoading = false
-                console.log(res)
-            });
+           this.request();
         }
     }
 

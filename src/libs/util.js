@@ -6,7 +6,7 @@ util.title = function (title) {
     window.document.title = title;
 };
 
-const baseUrl = 'http://11.0.0.100:5000';
+const baseUrl = 'http://11.0.0.101:5000';
 
 util.baseUrl = baseUrl;
 

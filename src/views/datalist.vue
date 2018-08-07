@@ -80,55 +80,55 @@
     import FilterTable from '../components/FilterTable'
 
 
-    const city = [{
-        value: '北京市',
+    const city = [
+        {
+            value: '北京市',
             name: '北京市'
-    },
-    {
-        value: '上海市',
+        },
+        {
+            value: '上海市',
             name: '上海市'
-    },
-    {
-        value: '武汉市',
+        },
+        {
+            value: '武汉市',
             name: '武汉市'
-    },
-    {
-        value: '杭州市',
+        },
+        {
+            value: '杭州市',
             name: '杭州市'
-    },
-    {
-        value: '广州市',
+        },
+        {
+            value: '广州市',
             name: '广州市'
-    },
-    {
-        value: '天津市',
+        },
+        {
+            value: '天津市',
             name: '天津市'
-    },
-    {
-        value: '南京市',
+        },
+        {
+            value: '南京市',
             name: '南京市'
-    },
-    {
-        value: '深圳市',
+        },
+        {
+            value: '深圳市',
             name: '深圳市'
-    },
-    {
-        value: '扬州市',
+        },
+        {
+            value: '扬州市',
             name: '扬州市'
-    },
-    {
-        value: '成都市',
+        },
+        {
+            value: '成都市',
             name: '成都市'
-    },
-    {
-        value: '长沙市',
+        },
+        {
+            value: '长沙市',
             name: '长沙市'
-    },
-    {
-        value: '',
+        },
+        {
+            value: '',
             name: '全部'
-    }]
-
+        }]
 
 
     export default {
@@ -140,8 +140,8 @@
                 showModel: false,
                 imgUrl: '',
                 totalNum: 0,
-                pageNum:1,
-                search:{},
+                pageNum: 1,
+                search: {},
                 columns1: [
                     {
                         title: 'id',
@@ -150,16 +150,16 @@
                     {
                         title: '姓名',
                         key: 'realName',
-                        filter:{
+                        filter: {
                             type: 'Input'
                         }
                     },
                     {
                         title: '城市',
                         key: 'city',
-                        filter:{
+                        filter: {
                             type: 'Select',
-                            option:city
+                            option: city
                         }
                     },
                     {
@@ -180,7 +180,7 @@
                                 on: {
                                     click: function () {
                                         that.showModel = true
-                                        that.imgUrl =Util.baseUrl + '/static/' + that.data1[params.index].avatarUrl
+                                        that.imgUrl = Util.baseUrl + '/static/' + that.data1[params.index].avatarUrl
                                         console.log('value:' + that.data1[params.index].avatarUrl)
                                     }
                                 }
@@ -211,8 +211,8 @@
                 // }
                 // this.search.page = this.pageNum
                 // this.search.rows = 10
-                this.$set(this.search,'page',this.pageNum)
-                this.$set(this.search,'rows',10)
+                this.$set(this.search, 'page', this.pageNum)
+                this.$set(this.search, 'rows', 10)
                 var that = this;
                 this.$ajax.get(url, {params: this.search}).then(function (res) {
                     that.$Spin.hide()
@@ -230,8 +230,8 @@
                 var url = Util.baseUrl + '/api/girl';
                 this.pageNum = 1
                 // this.search.page = this.pageNum
-                this.$set(this.search,'page',this.pageNum)
-                console.log('loadData:'+ JSON.stringify(this.search))
+                this.$set(this.search, 'page', this.pageNum)
+                console.log('loadData:' + JSON.stringify(this.search))
                 var that = this;
                 this.$ajax.get(url, {params: this.search}).then(function (res) {
                     that.$Spin.hide()
