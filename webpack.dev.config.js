@@ -31,5 +31,18 @@ module.exports = merge(webpackBaseConfig, {
             template: './src/template/index.ejs',
             inject: false
         })
-    ]
+    ],
+    devServer: {
+        historyApiFallback: true,
+        hot: true,
+        inline: true,
+        progress: true,
+        port:'8081',
+        proxy: {
+            '/api/*': {
+                target: 'http://dev.haoqianbao.com',
+                changeOrigin: true,
+            }
+        }
+    }
 });

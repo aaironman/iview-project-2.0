@@ -59,7 +59,7 @@
             <Button shape="circle" icon="ios-search"></Button>
             <Button icon="ios-search">Search</Button>
             <Button shape="circle" icon="ios-search">Search</Button>
-            <Button shape="circle">Circle</Button>
+            <Button shape="circle" @click="getData">Circle</Button>
             <p>
                 <!-- 使用 router-link 组件来导航. -->
                 <!-- 通过传入 `to` 属性指定链接. -->
@@ -77,12 +77,24 @@
     </div>
 </template>
 <script>
+    import Util from '../libs/util.js'
     export default {
         methods: {
             handleStart() {
                 this.$Modal.info({
                     title: 'Bravo',
                     content: 'Now, enjoy the convenience of iView.'
+                });
+            },
+            getData(){
+
+                var that = this;
+                this.$ajax.get('/api/api/layout').then(function (res) {
+                    that.$Spin.hide()
+                    console.log(res.data);
+                }).catch(function (res) {
+                    that.$Spin.hide()
+                    console.log(res)
                 });
             }
         }
